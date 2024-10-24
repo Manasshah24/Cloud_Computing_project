@@ -1,0 +1,45 @@
+1) Why did we use microservices?
+We used microservices architecture for the following reasons:
+
+Separation of Concerns: Each microservice (like uc1, uc2, and uc3) focuses on a specific domain or functionality. This way, user management, product management, and cart/order management are handled independently.
+
+Scalability: Microservices allow each service to be scaled individually. For example, if the product catalog (uc2) is getting more traffic than the user service (uc1), you can scale only the product service instead of the entire application.
+
+Independent Deployment: Since each service runs independently, they can be updated and deployed without affecting the others. This results in faster development and more flexible releases.
+
+Technology Flexibility: Microservices can be built using different technologies, allowing teams to choose the best tool for each service.
+
+Fault Isolation: If one microservice fails (e.g., uc1 fails), it won't bring down the entire application; the other services (uc2, uc3, and frontend) can continue functioning.
+
+2) How did we make these microservices?
+Separation of Codebase: We created three separate services: uc1 (User Management), uc2 (Product Management), and uc3 (Cart & Order Management). Each of these microservices has its own codebase, Dockerfile, MongoDB database connections, and endpoints.
+
+API for Communication: Each microservice exposes APIs using Express.js and Mongoose for handling HTTP requests and interacting with MongoDB.
+
+Dockerization: Each microservice was containerized (packaged) using Docker, which allows the microservice to run in a consistent environment across different systems.
+
+Kubernetes for Orchestration: After creating the Docker containers for each microservice, we deployed them to Kubernetes for better management of these microservices in a cluster (more details in question 3).
+
+3) Role of Docker and Kubernetes
+Docker's Role:
+
+Docker helps us package each microservice (uc1, uc2, uc3, and frontend) along with its dependencies (Node.js, MongoDB, etc.) into a Docker image.
+The image can then be run as a Docker container, which ensures that the microservice behaves the same way regardless of the environment (local, cloud, etc.).
+Each microservice has its own Dockerfile, which defines the setup and dependencies needed to run that service.
+Kubernetes' Role:
+
+Kubernetes is used for orchestrating and managing these Docker containers in a cluster.
+It automatically handles scaling, deployment, and fault tolerance for the microservices.
+In our case, we used Kubernetes Deployments to manage the lifecycle of the microservices, ensuring that each service runs in a container. We also created Kubernetes Services to expose the microservices so they can communicate with each other and be accessed externally (via NodePort).
+Minikube (a local Kubernetes tool) helped run Kubernetes on your machine to simulate the cloud environment locally.
+
+4) Why Containers?
+Consistency Across Environments: Containers allow developers to package their code and its dependencies together, ensuring the application works the same in development, testing, and production.
+
+Lightweight: Unlike traditional virtual machines (VMs), containers share the host OS, making them much lighter and faster to start.
+
+Isolation: Each microservice runs in its own isolated container, which ensures that it doesn’t interfere with other services. For example, uc1 has its own container, so it doesn’t affect uc2 even if there are issues in uc1.
+
+Scalability and Resource Efficiency: Containers are lightweight, so it’s easy to scale specific microservices up or down without consuming too many resources. Kubernetes automates this scaling.
+
+Portability: Since the container encapsulates everything the microservice needs (code, runtime, libraries), it can run consistently across different platforms (developer laptops, on-prem servers, cloud environments).

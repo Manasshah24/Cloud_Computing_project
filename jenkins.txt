@@ -1,0 +1,8 @@
+go into cmd and type 
+C:\ProgramData\Jenkins\.jenkins\secrets>
+
+and then , in file explorer search for the above
+
+jenkins 
+username - manas24
+password - manasrahul

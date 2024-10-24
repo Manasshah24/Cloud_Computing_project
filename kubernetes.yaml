@@ -1,0 +1,140 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend-container
+        image: manascloud24/frontend:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uc1-deployment
+  labels:
+    app: uc1
+spec:
+  selector:
+    matchLabels:
+      app: uc1
+  template:
+    metadata:
+      labels:
+        app: uc1
+    spec:
+      containers:
+      - name: uc1-container
+        image: manascloud24/uc1:latest
+        ports:
+        - containerPort: 5001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uc2-deployment
+  labels:
+    app: uc2
+spec:
+  selector:
+    matchLabels:
+      app: uc2
+  template:
+    metadata:
+      labels:
+        app: uc2
+    spec:
+      containers:
+      - name: uc2-container
+        image: manascloud24/uc2:latest
+        ports:
+        - containerPort: 5002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uc3-deployment
+  labels:
+    app: uc3
+spec:
+  selector:
+    matchLabels:
+      app: uc3
+  template:
+    metadata:
+      labels:
+        app: uc3
+    spec:
+      containers:
+      - name: uc3-container
+        image: manascloud24/uc3:latest
+        ports:
+        - containerPort: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000
+    nodePort: 31000  # Port exposed on the Node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uc1-service
+spec:
+  type: NodePort
+  selector:
+    app: uc1
+  ports:
+  - protocol: TCP
+    port: 5001
+    targetPort: 5001
+    nodePort: 31001  # Port exposed on the Node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uc2-service
+spec:
+  type: NodePort
+  selector:
+    app: uc2
+  ports:
+  - protocol: TCP
+    port: 5002
+    targetPort: 5002
+    nodePort: 31002  # Port exposed on the Node
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: uc3-service
+spec:
+  type: NodePort
+  selector:
+    app: uc3
+  ports:
+  - protocol: TCP
+    port: 5003
+    targetPort: 5003
+    nodePort: 31003  # Port exposed on the Node
